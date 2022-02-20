@@ -1,0 +1,12 @@
+com\data\repo\UserRepository.class
+com\data\entity\Deal.class
+com\data\serviceImpl\UserServiceImpl.class
+com\data\entity\User.class
+com\data\validate\DealValidator.class
+com\data\repo\DealRepository.class
+com\data\serviceImpl\DealServiceImpl.class
+com\data\validate\UserValidator.class
+com\data\controller\DataController.class
+com\data\service\DealService.class
+com\data\service\UserService.class
+com\data\warehouse\WarehouseApplication.class
