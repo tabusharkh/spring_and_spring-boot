@@ -6,6 +6,7 @@ After submitting the deal, you can not add any other deal with same stamp, the s
 Also, after submitting the deal, the form will be reloaded again with empty inputs.
 
 <h2>Running app Instructions<h2>
+
 you can pull this repository to your local machine and use Docker to run this app as there is a jar generated and docker file.
 Follow the steps bellow to run the app with docker terminal:
 
