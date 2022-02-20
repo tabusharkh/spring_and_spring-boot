@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+	  
+	   <h:head>
+	  	
+	  	<!--  -->
+	  	 <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+  
+	  	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	  	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js" />
+    	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" />
+    	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    	<link rel="stylesheet" href="resources/css/style.css" />
+     	
+     	<script type="text/javascript">
+     	$(document).ready(function() {
+     	   $(".datepicker").datepicker({
+     	      dateFormat: 'd-M-yy', //dd/MM/yy
+     	      changeMonth: false,
+     	      changeYear: true,
+     	      monthNames: ["1","2","3","4","5","6","7","8","9","10","11","12"],
+     	      monthNamesShort: ["1","2","3","4","5","6","7","8","9","10","11","12"],
+     	      yearRange: "1960:2021"
+     	   });
+     	});
+     	</script>
+     	<style>
+  	  		.red{
+  	  		color: red
+  	  		}
+  	  		.container {
+  	  		width: 50%;
+    		margin-right: auto;
+   			 margin-left: auto;
+  	  		}
+  	  		th {
+  	  		background-color: #04AA6D;
+    		padding: 14px 50px;
+  	  		}
+  	  		input[type=text], input[type=password] {
+  			width: 60%;
+  			padding: 12px 20px;
+  			margin: 8px 0;
+  			display: inline-block;
+  			border: 1px solid #ccc;
+  			box-sizing: border-box;
+			}
+
+			input[type=submit] {
+  			background-color: #04AA6D;
+  			color: white;
+  			padding: 14px 20px;
+  			margin: 8px 0;
+  			border: none;
+  			cursor: pointer;
+  			width: 60%;
+			}
+			.title {
+			font-weight: bold;
+			margin-left: 10px;
+			}
+  	  </style>
+     	
+     	<title>Home Page</title>
+	  	
+	  	</h:head>
+	  
+	 <h:body>
+	  
+	  <div class="container">
+	  <h:messages styleClass="red"/>
+	  <div class="row">
+	  <div class="col-xs-12 col-xs-updated">
+	  <h:message/>
+	  
+	  <h:form action="/nagarro/viewRecords" modelAttribute="statementForm" id="stmtForm" autocomplete="off" styleClass="form-horizontal">
+	  <h:commandButton value="Log out" action="#{loginBean.logout()}" styleClass="btn btn-primary" style="width: 100px; float: right;"/>
+	  <div class="form-group">Account Id: <!--  validator="#{statement.validateAccountId}"-->
+	  <div class="col-sm-10"><h:inputText id="accountId"  required="true" value="#{homeBean.accountId}"
+	  											requiredMessage="Account id is required."
+	  											 converterMessage="Account Id should be number only."/></div>
+	  </div>
+	  <!-- <h:panelGroup rendered="#{not empty level and level ==1}">  -->
+
+	  <div class="form-group">
+	  From <div class="col-sm-10">  
+	  <h:inputText type="text" name="from" autocomplete="off" id="fromDate" value="#{homeBean.fromDate}"
+	  										 styleClass="form-control datepicker" validator="#{homeBean.validateUser}">
+		 <f:convertDateTime pattern="d-M-yyyy" />   
+	  </h:inputText>
+	  </div>
+	  </div>
+	  
+	  <div class="form-group">
+	  To <br/> <div class="col-sm-10">
+	  <h:inputText type="text" name="to" autocomplete="off" id="toDate" value="#{homeBean.toDate}"
+	  										styleClass="form-control datepicker" validator="#{homeBean.validateUser}">
+	  	<f:convertDateTime pattern="d-M-yyyy" />
+	  </h:inputText>
+	  </div>
+	  											
+	  </div>
+	  
+	  <div>
+	
+	  <b>Amount</b> <br/> 
+	  From: <br/>
+	  <div class="col-sm-10"> <h:inputText id="amountFrom"  label="Amount From" value="#{homeBean.fromAmount}"
+	  									disabled="false" converterMessage="Amount should be number only."
+	  									validator="#{homeBean.validateUser}"/>
+	  </div>									
+	  	To <br/> <div class="col-sm-10"><h:inputText id="amountTo"  label="Amount To"
+	  					value="#{homeBean.toAmount}" disabled="false" 
+	  					converterMessage="Amount should be number only." validator="#{homeBean.validateUser}"/>
+	  </div>
+	  </div>
+	  <!-- </h:panelGroup>  -->
+	  
+	  <h:commandButton value="View Statements" update="records accId accNo" action="#{homeBean.fetchRecords()}" styleClass="btn btn-primary"/>
+	  
+	  <br/> <br/>
+	  
+	  <h:outputLabel class="title" value="Account Type: " id="accId"/> <span><h:outputText value="#{homeBean.accountInfo.account_type}"/></span>
+	  <h:outputLabel class="title" value="Account Number" id="accNo"/> <span><h:outputText value="#{homeBean.accountInfo.account_number}"/></span>
+	  
+	  <h:dataTable id="records" class="table100-head" var="rec" value="#{homeBean.records}" paginator="true" rowsPerPageTemplate="4">
+				<h:column class="column1">
+					<f:facet name="header">Account Id</f:facet>
+         					#{rec.accountId}
+				</h:column>
+				
+				<h:column headerText="" class="column2">
+					<f:facet name="header">Date</f:facet>
+					<h:outputText value = "#{rec.dateField}" >
+         				<f:convertDateTime pattern = "dd-MM-yyyy" />
+      				</h:outputText>
+					
+				</h:column>
+
+				<h:column class="column3">
+					<f:facet name="header">Amount</f:facet>
+						#{rec.amount}
+				</h:column>
+			</h:dataTable>
+	  
+	  </h:form>
+	  </div>
+	  </div>
+	  </div>
+	  </h:body>
+	  </html>

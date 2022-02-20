@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+	  
+	  <h:head>
+	  <link rel="stylesheet" href="resources/css/style.css" />
+	  <title>Login Page</title>
+	  <style>
+	  .red{
+	  color: red
+	  }
+	  input[type=text], input[type=password] {
+  	width: 100%;
+  	padding: 12px 20px;
+  	margin: 8px 0;
+  	display: inline-block;
+  	border: 1px solid #ccc;
+  	box-sizing: border-box;
+	}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+	  .container {
+ 	 	padding: 16px;
+ 	 	width:40%;
+ 	 	margin-left: auto;
+    	margin-right: auto;
+		}
+		
+	  </style>
+	  </h:head>
+	  
+	  <h:body>
+	
+	  <div class="login">
+  		
+	  
+	  <h:form modelAttribute="">
+	  	<div class="container"><!--  -->
+	  	<h:messages styleClass="red"/>
+	  	<h1>Login</h1>
+	  	User Name: <h:inputText id="name"  label="User Name" value="#{loginBean.username}"
+	  													required="true"
+	  													requiredMessage="Your user name is required."/>
+	  													
+	  												
+	  	
+	  	Password: <h:inputSecret id="password"  label="Password" value="#{loginBean.password}"
+	  													   required="true"
+	  													   requiredMessage="Password is required."/>
+	  													   
+	  	
+	  	<h:commandButton value="Submit" action="#{loginBean.validateUser}" class="btn btn-primary btn-block btn-large"/>
+	  </div>		
+	  </h:form>
+	  </div>
+	  </h:body>
+	  
+	  
+	  
+	  </html>
